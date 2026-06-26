@@ -1,0 +1,63 @@
+# Better Stack plugin for Codex
+
+Connect [Codex](https://developers.openai.com/codex/) to your [Better Stack](https://betterstack.com) Uptime and Telemetry data through the Model Context Protocol (MCP). Your agent can query logs and metrics, build dashboards, manage uptime monitors, and respond to incidents, all in natural language.
+
+## Install
+
+This repository is also a Codex plugin marketplace. Add it, then install the plugin:
+
+```bash
+codex plugin marketplace add BetterStackHQ/codex-plugin
+codex plugin install betterstack
+```
+
+Or add the MCP server directly to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.betterstack]
+url = "https://mcp.betterstack.com"
+```
+
+Then sign in with OAuth (opens a browser, no token needed):
+
+```bash
+codex mcp login betterstack
+```
+
+## What you can do
+
+Try asking your agent things like:
+
+- *"Show me all monitors that are currently down."*
+- *"What's the availability of my website this month?"*
+- *"What incidents occurred yesterday?"*
+- *"Who's on-call right now?"*
+- *"Acknowledge incident #1234 and add a comment about the fix."*
+- *"Build an explore query to find HTTP 500 errors in the last hour."*
+- *"Create a dashboard showing error rates for my API service."*
+
+## Tools
+
+The plugin exposes the full Better Stack MCP toolset:
+
+- **Uptime**: monitors, incidents, on-call schedules and escalation, heartbeats, status pages.
+- **Telemetry**: dashboards, charts, alerts, log/metric/error queries, sources and applications.
+- **Documentation**: search Better Stack docs from within Codex.
+
+The complete tool reference and example prompts live in the [Better Stack MCP integration docs](https://betterstack.com/docs/getting-started/integrations/mcp/).
+
+## Authentication
+
+OAuth is the recommended flow. Run `codex mcp login betterstack` to sign in through your browser. No token configuration needed.
+
+If you prefer an API token, set one via an environment variable. Get a Better Stack [API token](https://betterstack.com/docs/uptime/api/getting-started-with-uptime-api/), then reference it from `config.toml`:
+
+```toml
+[mcp_servers.betterstack]
+url = "https://mcp.betterstack.com"
+bearer_token_env_var = "BETTERSTACK_API_TOKEN"
+```
+
+## License
+
+MIT. See [LICENSE](LICENSE).

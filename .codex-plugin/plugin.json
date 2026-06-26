@@ -1,0 +1,36 @@
+{
+  "name": "betterstack",
+  "version": "1.0.0",
+  "description": "Observability for AI agents: query logs and metrics, build dashboards, manage uptime monitors, and respond to incidents through Better Stack.",
+  "author": {
+    "name": "Better Stack",
+    "email": "hello@betterstack.com",
+    "url": "https://betterstack.com"
+  },
+  "homepage": "https://betterstack.com",
+  "repository": "https://github.com/BetterStackHQ/codex-plugin",
+  "license": "MIT",
+  "keywords": [
+    "observability",
+    "monitoring",
+    "logs",
+    "metrics",
+    "dashboards",
+    "uptime",
+    "incidents",
+    "on-call",
+    "telemetry",
+    "better-stack",
+    "mcp"
+  ],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Better Stack",
+    "shortDescription": "Observability for AI agents",
+    "longDescription": "Query logs and metrics, build dashboards, manage uptime monitors, and respond to incidents through Better Stack.",
+    "developerName": "Better Stack",
+    "category": "Productivity",
+    "websiteURL": "https://betterstack.com",
+    "logo": "./assets/logo.svg"
+  }
+}
