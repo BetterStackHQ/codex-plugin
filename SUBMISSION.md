@@ -6,20 +6,21 @@ is submission-ready; these are portal-side and server-side prerequisites.
 
 ## Import file
 
-`chatgpt-app-submission.json` (repo root) follows the official schema
-(https://developers.openai.com/plugins/schemas/chatgpt-app-submission.v1.json) from the
-`chatgpt-app-submission` skill in OpenAI's [openai/plugins](https://github.com/openai/plugins)
-"OpenAI Developers" plugin. Upload it in the submission form to prefill App Info, tool
-annotations + justifications, and the 5 positive / 3 negative test cases. It was generated
-from the LIVE `tools/list` of mcp.betterstack.com (116 tools, all with explicit hints).
-Justifications containing `TODO(mcp-team)` mark declared hints that look inconsistent with
-Apps SDK review semantics (see PR notes) and need confirming before submission.
+`chatgpt-app-submission.json` is kept OUT of the repo (Simon holds it locally for the
+form upload). It follows the official schema
+(`$schema` https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json)
+from the `chatgpt-app-submission` skill in OpenAI's
+[openai/plugins](https://github.com/openai/plugins) "OpenAI Developers" plugin. It was
+generated from the LIVE `tools/list` of mcp.betterstack.com (116 tools, all with explicit
+hints); regenerate it if the server's tool hints change. Justifications containing
+`TODO(mcp-team)` mark declared hints that look inconsistent with Apps SDK review semantics
+(see PR notes) and need confirming before submission.
 
 ## Server-side (mcp.betterstack.com)
 
 - [x] Tool annotations on every MCP tool: all 116 tools declare `readOnlyHint`,
       `openWorldHint`, and `destructiveHint` explicitly (verified via live `tools/list`).
-- [ ] Resolve the `TODO(mcp-team)` hint questions in `chatgpt-app-submission.json`
+- [ ] Resolve the `TODO(mcp-team)` hint questions from the submission file
       (status-page writes declare `openWorldHint=false` despite editing public pages;
       `query`/`render_chart`/`create_dashboard`/`import_dashboard` declare it `true`;
       `invite_team_member` sends e-mail but declares it `false`).
@@ -35,7 +36,7 @@ Apps SDK review semantics (see PR notes) and need confirming before submission.
 - [ ] Demo credentials for a test account that works without MFA, SMS, email
       confirmation, or private-network access.
 - [x] 5 positive + 3 negative test cases: written out in
-      `chatgpt-app-submission.json`; attach the demo test account details in the form.
+      the submission file (uploaded in the form); attach the demo test account details there.
 - [ ] Support URL, availability countries, release notes, policy attestations.
 
 Listing metadata (name, descriptions, category, logo, website, privacy, terms,
