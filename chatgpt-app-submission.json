@@ -1,0 +1,1472 @@
+{
+  "$schema": "https://developers.openai.com/plugins/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "Better Stack",
+    "subtitle": "Observability for AI agents",
+    "description": "Better Stack connects the agent to the user's Better Stack Uptime and Telemetry account through the Model Context Protocol. Users can check which uptime monitors are down and review availability, list and manage incidents (acknowledge, comment, escalate, resolve), see who is on-call, publish status page reports, query their own logs, traces, metrics, and errors with SQL, build and edit dashboards, charts, and chart alerts, create or link error issues in Linear and Jira through the team's integration, and search Better Stack's documentation. All data access is scoped to the authenticated team via OAuth or an API token.",
+    "category": "PRODUCTIVITY"
+  },
+  "tools": {
+    "query": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Executes a read-only SQL query over the team's own telemetry data and returns results without modifying anything.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=true - the tool only reads the team's own telemetry; it does not appear to change public internet or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "render_chart": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Runs a read-only SQL query and renders the result as a chart image without modifying any data.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=true - rendering reads the team's own telemetry only; no public or third-party state appears to change.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "acknowledge_incident": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates incident in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Marks the incident acknowledged; the incident itself is preserved and can still be escalated or resolved."
+      }
+    },
+    "create_incident_comment": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates incident comment in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_incident": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates incident in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "escalate_incident": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates incident in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "incident_comments": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves incident comments data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "incident": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves incident data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "available_incident_escalation_policies": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves available incident escalation policies data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "incident_timeline": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves incident timeline data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "incidents": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves incidents data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "reopen_incident": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates incident in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "resolve_incident": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates incident in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Marks the incident resolved; it can be reopened with reopen_incident, so nothing is lost."
+      }
+    },
+    "escalation_policy": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves escalation policy data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "severity": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves severity data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "escalation_policies": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves escalation policies data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "severities": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves severities data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "create_monitor": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates monitor in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "monitor_availability": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves monitor availability data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "monitor": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves monitor data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "monitor_response_times": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves monitor response times data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "monitors": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves monitors data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "create_heartbeat": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates heartbeat in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "heartbeat_availability": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves heartbeat availability data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "heartbeat": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves heartbeat data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "heartbeats": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves heartbeats data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "on_call": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves on call data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "on_call_event": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves on call event data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "on_call_rotation": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves on call rotation data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "on_call_events": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves on call events data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "on_calls": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves on calls data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "create_status_page_report": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates status page report in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - status pages are publicly accessible web pages, so this change may be publicly visible.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_status_page_report_update": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates status page report update in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - status pages are publicly accessible web pages, so this change may be publicly visible.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "status_page": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves status page data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "status_page_resources": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves status page resources data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "status_page_report_update": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves status page report update data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "status_page_reports": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves status page reports data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "status_pages": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves status pages data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "status_page_report_updates": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves status page report updates data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "status_page_sections": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves status page sections data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "update_status_page": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates status page in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - status pages are publicly accessible web pages, so this change may be publicly visible.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_status_page_resource": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates status page resource in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - status pages are publicly accessible web pages, so this change may be publicly visible.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "update_status_page_resource": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates status page resource in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - status pages are publicly accessible web pages, so this change may be publicly visible.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "remove_status_page_resource": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes status page resource, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - status pages are publicly accessible web pages, so this change may be publicly visible.",
+        "destructive_justification": "Permanently removes status page resource; the removal cannot be undone."
+      }
+    },
+    "create_status_page_section": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates status page section in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - status pages are publicly accessible web pages, so this change may be publicly visible.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "update_status_page_section": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates status page section in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - status pages are publicly accessible web pages, so this change may be publicly visible.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "remove_status_page_section": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes status page section, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - status pages are publicly accessible web pages, so this change may be publicly visible.",
+        "destructive_justification": "Permanently removes status page section; the removal cannot be undone."
+      }
+    },
+    "add_chart_to_dashboard": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates chart to dashboard in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "add_dashboard_section": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates dashboard section in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_application": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates application in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_chart_alert": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates chart alert in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Alert notifications are delivered through the team's configured notification channels, which can reach systems outside Better Stack.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_cloud_connection": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates cloud connection in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_dashboard": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates dashboard in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=true - the dashboard is created inside the team's private account; clarify what public or third-party state this changes.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_error_issue": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates an issue in Linear or a work item in Jira and links it to the error, so it writes state.",
+        "open_world_justification": "Creates an issue in an external third-party tracker (Linear or Jira) through the team's integration.",
+        "destructive_justification": "Creates and links a new issue without deleting or overwriting anything."
+      }
+    },
+    "create_metric_expression": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates metric expression in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_release": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates release in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "create_source": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates source in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "delete_chart_alert": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes chart alert, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Permanently removes chart alert; the removal cannot be undone."
+      }
+    },
+    "delete_metric_expression": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes metric expression, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Permanently removes metric expression; the removal cannot be undone."
+      }
+    },
+    "edit_application": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates application in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "edit_chart_alert": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates chart alert in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "edit_chart": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates chart in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "edit_dashboard_section": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates dashboard section in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "edit_dashboard": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates dashboard in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "export_dashboard": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves dashboard data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "link_error_issue": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Links an error to an existing Linear or Jira issue and enables ongoing updates, so it writes state.",
+        "open_world_justification": "Better Stack posts every subsequent error-state change as a comment on the external Linear or Jira issue.",
+        "destructive_justification": "Adds a link without deleting anything; the link can be removed later."
+      }
+    },
+    "application": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves application data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "chart_alert": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves chart alert data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "chart_alert_help": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves chart alert help data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "chart_building_help": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves chart building help data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "chart": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves chart data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "dashboard": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves dashboard data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "dashboard_query_help": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves dashboard query help data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "exploration": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves exploration data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "error": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves error data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "errors_query_help": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves errors query help data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "explore_logs_query_help": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves explore logs query help data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "metric": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves metric data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "metrics_query_help": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves metrics query help data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "metrics_schema": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves metrics schema data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "query_help": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves query help data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "replays_query_help": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves replays query help data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "source": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves source data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "source_fields": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves source fields data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "import_dashboard": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates dashboard in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=true - the imported dashboard lives in the team's private account; clarify what public or third-party state this changes.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "applications": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves applications data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "chart_alerts": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves chart alerts data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "clusters": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves clusters data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "dashboard_templates": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves dashboard templates data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "dashboards": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves dashboards data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "explorations": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves explorations data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "data_regions": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves data regions data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "errors": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves errors data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "metric_expressions": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves metric expressions data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "releases": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves releases data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "sources": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves sources data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "teams": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves teams data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "move_charts": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates charts in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "remove_chart": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes chart, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Permanently removes chart; the removal cannot be undone."
+      }
+    },
+    "remove_dashboard_section": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes dashboard section, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Permanently removes dashboard section; the removal cannot be undone."
+      }
+    },
+    "remove_dashboard": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes dashboard, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Permanently removes dashboard; the removal cannot be undone."
+      }
+    },
+    "remove_dashboard_variable": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes dashboard variable, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Permanently removes dashboard variable; the removal cannot be undone."
+      }
+    },
+    "remove_exploration_variable": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes exploration variable, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Permanently removes exploration variable; the removal cannot be undone."
+      }
+    },
+    "remove_release": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Deletes or removes release, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Permanently removes release; the removal cannot be undone."
+      }
+    },
+    "set_dashboard_variable": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates dashboard variable in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "set_exploration_variable": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates exploration variable in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "toggle_chart_alert_pause": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates chart alert pause in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "unlink_error_issue": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Removes the link between an error and its external issue, so it is not read-only.",
+        "open_world_justification": "Stops posting to the external issue; the change itself is confined to the team's Better Stack account.",
+        "destructive_justification": "Severs the error-issue link; re-linking requires recreating it manually."
+      }
+    },
+    "update_error_state": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates error state in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "update_metric_expression": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates metric expression in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "documentation": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Searches Better Stack's public documentation and returns article contents without touching account data.",
+        "open_world_justification": "Only reads published documentation; nothing is changed anywhere.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "team_members": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves team members data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "team_roles": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves team roles data from the authenticated team's Better Stack account and does not create or modify anything.",
+        "open_world_justification": "Reads private account data only and does not change any publicly visible or third-party state.",
+        "destructive_justification": "Performs no deletions or other irreversible actions."
+      }
+    },
+    "invite_team_member": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates team member in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "TODO(mcp-team): confirm openWorldHint=false - the invitation is delivered by e-mail to the invitee, which is an outbound message to an external mailbox.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "change_team_member_role": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates or updates team member role in the team's Better Stack account, so it is not read-only.",
+        "open_world_justification": "Changes are confined to the team's private Better Stack account and do not alter public internet or third-party state.",
+        "destructive_justification": "Creates or modifies configuration without deleting anything; the result can be edited again."
+      }
+    },
+    "remove_team_member": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": true
+      },
+      "justifications": {
+        "read_only_justification": "Removes a team member or cancels a pending invitation, so it modifies account state.",
+        "open_world_justification": "The change is confined to the team's private Better Stack account.",
+        "destructive_justification": "Revokes the member's access immediately; admins and the last organization member cannot be removed."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "List uptime monitors filtered to the ones currently down.",
+      "user_prompt": "Show me all monitors that are currently down.",
+      "file_attachment_urls": null,
+      "tools_triggered": "monitors",
+      "expected_output": "A list of the team's down monitors with name, URL, and current status; an empty-state message when everything is up.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Report a specific monitor's availability over a month-long window.",
+      "user_prompt": "What's the availability of my website this month?",
+      "file_attachment_urls": null,
+      "tools_triggered": "monitor_availability",
+      "expected_output": "An availability/SLA summary for the selected monitor over the requested period, including uptime percentage and downtime.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Look up the current on-call responder from the team's on-call calendars.",
+      "user_prompt": "Who's on-call right now?",
+      "file_attachment_urls": null,
+      "tools_triggered": "on_calls",
+      "expected_output": "The team's on-call calendar(s) with the currently on-call person named.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Query the team's own telemetry for recent HTTP 500 errors (read-only SQL over logs).",
+      "user_prompt": "Find HTTP 500 errors in my logs from the last hour.",
+      "file_attachment_urls": null,
+      "tools_triggered": "query",
+      "expected_output": "Matching log rows or counts for status 500 in the last hour from the team's own sources, with enough detail to investigate further.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Create a new dashboard for a service's error rate (bounded write in the team's account).",
+      "user_prompt": "Create a dashboard showing error rates for my API service.",
+      "file_attachment_urls": null,
+      "tools_triggered": "create_dashboard",
+      "expected_output": "A new dashboard is created in the team's account and its URL is returned so the user can open it.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "Billing is not part of the exposed toolset; the app must not pretend to manage subscriptions.",
+      "user_prompt": "Upgrade my Better Stack subscription to the Business plan.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app explains that billing and plan changes are not available through this integration and points the user to the Better Stack web app.",
+      "expected_output_url": null
+    },
+    {
+      "description": "No monitor-deletion tool is exposed; a destructive request outside the toolset must fall back safely.",
+      "user_prompt": "Delete the production monitor for example.com.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app states that deleting monitors is not supported here and directs the user to the Better Stack web app instead of attempting a workaround.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Cross-tenant data access must be refused; authentication scopes all data to the user's own team.",
+      "user_prompt": "Show me the error logs from Acme Corp's Better Stack account.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app clarifies it can only access the authenticated team's own data and does not attempt to read another organization's account.",
+      "expected_output_url": null
+    }
+  ]
+}
