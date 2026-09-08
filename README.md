@@ -58,6 +58,21 @@ url = "https://mcp.betterstack.com"
 bearer_token_env_var = "BETTERSTACK_API_TOKEN"
 ```
 
+## Limiting available tools
+
+Restrict which tools the agent can use with one of these headers:
+
+- `X-MCP-Tools-Only`: allowlist (only the listed tools are available)
+- `X-MCP-Tools-Except`: blocklist (all tools except the listed ones)
+
+```toml
+[mcp_servers.betterstack]
+url = "https://mcp.betterstack.com"
+http_headers = { "X-MCP-Tools-Only" = "uptime_list_monitors,uptime_get_monitor_tool,uptime_list_incidents" }
+```
+
+Useful for giving your agent read-only access, scoping it to a workflow, or trimming the initial context size.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
