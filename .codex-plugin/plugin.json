@@ -30,7 +30,16 @@
     "longDescription": "Query logs and metrics, build dashboards, manage uptime monitors, and respond to incidents through Better Stack.",
     "developerName": "Better Stack",
     "category": "Productivity",
+    "capabilities": ["Read", "Write"],
     "websiteURL": "https://betterstack.com",
+    "privacyPolicyURL": "https://betterstack.com/privacy",
+    "termsOfServiceURL": "https://betterstack.com/terms",
+    "defaultPrompt": [
+      "Show me all monitors that are currently down.",
+      "What incidents occurred yesterday?",
+      "Who's on-call right now?",
+      "Create a dashboard showing error rates for my API service."
+    ],
     "logo": "./assets/logo.svg"
   }
 }
