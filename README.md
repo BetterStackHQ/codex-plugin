@@ -1,6 +1,6 @@
 # Better Stack plugin for Codex
 
-Connect [Codex](https://developers.openai.com/codex/) to your [Better Stack](https://betterstack.com) Uptime and Telemetry data through the Model Context Protocol (MCP). Your agent can query logs and metrics, build dashboards, manage uptime monitors, and respond to incidents, all in natural language.
+Connect [Codex](https://developers.openai.com/codex/) to your [Better Stack](https://betterstack.com) Incidents and Telemetry data through the Model Context Protocol (MCP). Your agent can investigate incidents, check who is on call, manage uptime monitors, query logs, metrics, traces and errors, and build dashboards, all in natural language.
 
 ## Install
 
@@ -40,7 +40,7 @@ Try asking your agent things like:
 
 The plugin exposes the full Better Stack MCP toolset:
 
-- **Uptime**: monitors, incidents, on-call schedules and escalation, heartbeats, status pages.
+- **Incidents** (formerly Uptime): incidents, on-call schedules and escalation, uptime monitors, heartbeats, status pages.
 - **Telemetry**: dashboards, charts, alerts, log/metric/error queries, sources and applications.
 - **Documentation**: search Better Stack docs from within Codex.
 
@@ -68,7 +68,7 @@ Restrict which tools the agent can use with one of these headers:
 ```toml
 [mcp_servers.betterstack]
 url = "https://mcp.betterstack.com"
-http_headers = { "X-MCP-Tools-Only" = "uptime_list_monitors,uptime_get_monitor_tool,uptime_list_incidents" }
+http_headers = { "X-MCP-Tools-Only" = "monitors,monitor,incidents,incident" }
 ```
 
 Useful for giving your agent read-only access, scoping it to a workflow, or trimming the initial context size.

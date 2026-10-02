@@ -1,9 +1,9 @@
 {
   "name": "betterstack",
-  "version": "1.0.0",
-  "description": "Observability for AI agents: query logs and metrics, build dashboards, manage uptime monitors, and respond to incidents through Better Stack.",
+  "version": "1.0.1",
+  "description": "Connect Codex to your Better Stack Incidents and Telemetry data.",
   "author": {
-    "name": "Better Stack",
+    "name": "Better Stack, Inc.",
     "email": "hello@betterstack.com",
     "url": "https://betterstack.com"
   },
@@ -26,9 +26,9 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Better Stack",
-    "shortDescription": "Observability for AI agents",
-    "longDescription": "Query logs and metrics, build dashboards, manage uptime monitors, and respond to incidents through Better Stack.",
-    "developerName": "Better Stack",
+    "shortDescription": "Better Stack Incidents and Telemetry",
+    "longDescription": "Investigate incidents, check who is on call, manage uptime monitors, query logs, metrics, traces and errors, and build dashboards with your Better Stack Incidents and Telemetry data.",
+    "developerName": "Better Stack, Inc.",
     "category": "Productivity",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://betterstack.com",
