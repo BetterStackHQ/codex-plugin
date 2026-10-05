@@ -1,6 +1,6 @@
 {
   "name": "betterstack",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Connect Codex to your Better Stack Incidents and Telemetry data.",
   "author": {
     "name": "Better Stack, Inc.",
@@ -40,6 +40,9 @@
       "Who's on-call right now?",
       "Create a dashboard showing error rates for my API service."
     ],
-    "logo": "./assets/logo.svg"
+    "composerIcon": "./assets/icon.png",
+    "composerIconDark": "./assets/icon-dark.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   }
 }
