@@ -1,5 +1,5 @@
 {
-  "mcp_servers": {
+  "mcpServers": {
     "betterstack": {
       "url": "https://mcp.betterstack.com"
     }
