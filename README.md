@@ -8,7 +8,7 @@ This repository is also a Codex plugin marketplace. Add it, then install the plu
 
 ```bash
 codex plugin marketplace add BetterStackHQ/codex-plugin
-codex plugin install betterstack
+codex plugin add betterstack@betterstack
 ```
 
 Or add the MCP server directly to `~/.codex/config.toml`:
