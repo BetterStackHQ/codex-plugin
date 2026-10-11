@@ -83,7 +83,7 @@
   "interface": {
     "displayName": "Better Stack",
     "shortDescription": "Incidents, logs and metrics",
-    "longDescription": "Investigate incidents, check who is on call, manage uptime monitors, query logs, metrics, traces, errors and real user monitoring (RUM) data, and build dashboards with your Better Stack Incidents and Telemetry data.",
+    "longDescription": "Investigate incidents, check who is on call, manage uptime monitors, query logs, metrics, traces, errors and real user monitoring (RUM), and build dashboards with your Better Stack Incidents and Telemetry data.",
     "developerName": "Better Stack, Inc.",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
