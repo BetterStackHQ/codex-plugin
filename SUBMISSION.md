@@ -18,10 +18,12 @@ is submission-ready; these are portal-side and server-side prerequisites.
 - [ ] Verified developer identity (business).
 - [ ] Demo credentials for a test account that works without MFA, SMS, email
       confirmation, or private-network access.
-- [ ] At least 5 positive test cases (prompt, expected behavior, result shape,
-      test account) and 3 negative test cases (prompt, expected refusal or safe
-      fallback, justification).
-- [ ] Support URL, availability countries, release notes, policy attestations.
+- [x] Test cases: 5 positive and 3 negative, in `.codex-plugin/plugin.json` under
+      `extensions.com.openai.review.test_cases`. The portal imports them read-only from the ZIP,
+      so change them here and upload a new ZIP.
+- [ ] Demo recording URL (`review.demo_recording_url`, can also go in the manifest).
+- [x] Support URL: `interface.supportURL`.
+- [ ] Availability countries, release notes, policy attestations.
 
 Listing metadata (name, descriptions, category, logo, website, privacy, terms,
 starter prompts) mirrors `.codex-plugin/plugin.json` -> `interface`.

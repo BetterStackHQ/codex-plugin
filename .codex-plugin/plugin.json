@@ -1,6 +1,6 @@
 {
   "name": "betterstack",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Connect Codex to your Better Stack Incidents and Telemetry data.",
   "author": {
     "name": "Better Stack, Inc.",
@@ -27,22 +27,72 @@
   "mcpServers": "./.mcp.json",
   "extensions": {
     "com.openai": {
-      "onboardingSkill": "./skills/connect-betterstack/SKILL.md"
+      "onboardingSkill": "./skills/connect-betterstack/SKILL.md",
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "List monitors that are down right now.",
+              "prompt": "Which of my Better Stack monitors are down right now?",
+              "tools_triggered": "monitors",
+              "expected_behavior": "Lists every monitor whose status is down, with its name, URL and since when it has been down. If none are down, says that all monitors are up."
+            },
+            {
+              "description": "Find who is on call.",
+              "prompt": "Who is on call right now?",
+              "tools_triggered": "on_calls, on_call",
+              "expected_behavior": "Names the person currently on call for each on-call calendar, with when their shift ends."
+            },
+            {
+              "description": "Investigate an ongoing incident, read-only.",
+              "prompt": "Investigate the most recent ongoing incident and tell me the likely cause.",
+              "tools_triggered": "incidents, incident, incident_timeline, monitor_response_times, errors",
+              "expected_behavior": "Summarizes the incident (what is affected, since when, who was alerted), shows its timeline and the errors or response-time change around its start, and names the most likely cause. Does not acknowledge or resolve the incident."
+            },
+            {
+              "description": "Query logs for server errors.",
+              "prompt": "Show me HTTP 500 errors in my logs from the last hour.",
+              "tools_triggered": "sources, query_help, query",
+              "expected_behavior": "Finds the log sources, runs a query limited to the last hour, and returns the number of 500 responses with a few example log lines and the source they came from."
+            },
+            {
+              "description": "Report a monitor's availability.",
+              "prompt": "What was the availability of my website monitor over the last 30 days?",
+              "tools_triggered": "monitors, monitor_availability",
+              "expected_behavior": "Finds the website monitor and reports its availability percentage for the last 30 days, with total downtime and the number of incidents."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unrelated request. The plugin should not be used: ChatGPT answers without calling Better Stack tools.",
+              "prompt": "What's the weather in Prague today?"
+            },
+            {
+              "description": "Bulk destructive request. The plugin has no bulk delete, so it should not delete anything. It explains that and points to the Better Stack dashboard, or asks which single monitor is meant.",
+              "prompt": "Delete all of my monitors."
+            },
+            {
+              "description": "Another organization's data. The plugin only sees the Better Stack teams the signed-in user belongs to, so it says it can't access other companies' accounts.",
+              "prompt": "Show me the logs of Acme Corp's Better Stack account."
+            }
+          ]
+        }
+      }
     }
   },
   "interface": {
     "displayName": "Better Stack",
-    "shortDescription": "Better Stack Incidents and Telemetry",
+    "shortDescription": "Incidents and Telemetry",
     "longDescription": "Investigate incidents, check who is on call, manage uptime monitors, query logs, metrics, traces and errors, and build dashboards with your Better Stack Incidents and Telemetry data.",
     "developerName": "Better Stack, Inc.",
-    "category": "Productivity",
+    "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://betterstack.com",
+    "supportURL": "https://betterstack.com",
     "privacyPolicyURL": "https://betterstack.com/privacy",
     "termsOfServiceURL": "https://betterstack.com/terms",
     "defaultPrompt": [
       "Show me all monitors that are currently down.",
-      "What incidents occurred yesterday?",
       "Who's on-call right now?",
       "Create a dashboard showing error rates for my API service."
     ],
