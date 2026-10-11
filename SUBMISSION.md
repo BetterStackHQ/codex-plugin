@@ -18,10 +18,12 @@ is submission-ready; these are portal-side and server-side prerequisites.
 - [ ] Verified developer identity (business).
 - [ ] Demo credentials for a test account that works without MFA, SMS, email
       confirmation, or private-network access.
-- [ ] At least 5 positive test cases (prompt, expected behavior, result shape,
-      test account) and 3 negative test cases (prompt, expected refusal or safe
-      fallback, justification).
-- [ ] Support URL, availability countries, release notes, policy attestations.
+- [x] Test cases: 5 positive and 3 negative, in `.codex-plugin/plugin.json` under
+      `extensions.com.openai.review.test_cases`. The portal imports them read-only from the ZIP,
+      so change them here and upload a new ZIP.
+- [ ] Demo recording URL (`review.demo_recording_url`, can also go in the manifest).
+- [x] Support URL: `interface.supportURL`.
+- [ ] Availability countries, release notes, policy attestations.
 
 Listing metadata (name, descriptions, category, logo, website, privacy, terms,
 starter prompts) mirrors `.codex-plugin/plugin.json` -> `interface`.
@@ -33,12 +35,18 @@ and icons from the last ZIP uploaded in the portal, and its MCP connection is th
 on the portal's MCPs tab. To ship a change from this repo, upload a new ZIP to the existing
 plugin. It gets its own checks and review, and replaces the previous version once published.
 
-Build the ZIP from a clean checkout of `main` (`.gitattributes` leaves out the marketplace
-file and this checklist):
+Build the ZIP with `scripts/chatgpt-zip` (defaults: `main`, `betterstack-plugin.zip`). It leaves out
+the marketplace file, this checklist and the scripts (`.gitattributes`), and renames the plugin to
+`app-6aa02bd506908191bbf12fc2ec2f3161` inside the ZIP only: the portal requires the live plugin's
+name, while Codex installs it as `betterstack`.
 
 ```bash
-git archive --format=zip -o betterstack-plugin.zip main
+scripts/chatgpt-zip main betterstack-plugin.zip
 ```
+
+Upload it from inside the live plugin, not from the Plugins list, which creates a new plugin:
+open https://platform.openai.com/plugins/manage/plugin_asdk_app_6aa02bd506908191bbf12fc2ec2f3161
+(Better Stack's OpenAI organization only) and upload the ZIP there.
 
 The manifest sets `extensions.com.openai.onboardingSkill` to the connect-betterstack skill,
 so ChatGPT and Codex offer it as the plugin's setup step after install.

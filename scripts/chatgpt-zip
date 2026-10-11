@@ -1,0 +1,24 @@
+#!/bin/sh
+# Builds the ZIP for the ChatGPT plugin portal (platform.openai.com/plugins).
+# The portal identifies our live plugin by the name "app-6aa02bd506908191bbf12fc2ec2f3161",
+# while Codex installs it as "betterstack", so the name is swapped only inside the ZIP.
+# Usage: scripts/chatgpt-zip [git ref, default main] [output path]
+set -eu
+ref=${1:-main}
+out=${2:-betterstack-plugin.zip}
+portal_name=app-6aa02bd506908191bbf12fc2ec2f3161
+
+case "$out" in /*) ;; *) out="$PWD/$out" ;; esac
+cd "$(dirname "$0")/.."
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+git archive --format=tar "$ref" | tar -x -C "$tmp"
+manifest="$tmp/.codex-plugin/plugin.json"
+grep -q '^  "name": "betterstack",$' "$manifest" || { echo "unexpected name line in plugin.json" >&2; exit 1; }
+sed "s/^  \"name\": \"betterstack\",\$/  \"name\": \"$portal_name\",/" "$manifest" > "$tmp/plugin.json"
+mv "$tmp/plugin.json" "$manifest"
+
+rm -f "$out"
+(cd "$tmp" && zip -qr "$out" .)
+echo "$out"
