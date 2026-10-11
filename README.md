@@ -4,11 +4,17 @@ Connect [Codex](https://developers.openai.com/codex/) to your [Better Stack](htt
 
 ## Install
 
+### ChatGPT
+
+Open **Plugins** in the sidebar, find **Better Stack** and select the plus button to install it. Connect Better Stack when ChatGPT asks and sign in with your Better Stack account. Then start a new chat.
+
+### Codex
+
 This repository is also a Codex plugin marketplace. Add it, then install the plugin:
 
 ```bash
 codex plugin marketplace add BetterStackHQ/codex-plugin
-codex plugin install betterstack
+codex plugin add betterstack@betterstack
 ```
 
 Or add the MCP server directly to `~/.codex/config.toml`:
@@ -18,11 +24,17 @@ Or add the MCP server directly to `~/.codex/config.toml`:
 url = "https://mcp.betterstack.com"
 ```
 
-Then sign in with OAuth (opens a browser, no token needed):
+Either way, sign in with OAuth (opens a browser, no token needed), then start a new Codex session:
 
 ```bash
 codex mcp login betterstack
 ```
+
+`codex mcp list` shows whether you're signed in.
+
+### Not connected yet?
+
+The plugin's **connect-betterstack** skill is its setup step. ChatGPT and Codex offer it after you install the plugin, and the agent also uses it when a Better Stack request comes in but the Better Stack tools aren't connected. It tells you how to connect in the app you're using instead of failing quietly.
 
 ## What you can do
 
