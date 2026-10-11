@@ -1,6 +1,6 @@
 {
   "name": "betterstack",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Connect Codex to your Better Stack Incidents and Telemetry data.",
   "author": {
     "name": "Better Stack, Inc.",
@@ -23,7 +23,13 @@
     "better-stack",
     "mcp"
   ],
+  "skills": "./skills/",
   "mcpServers": "./.mcp.json",
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/connect-betterstack/SKILL.md"
+    }
+  },
   "interface": {
     "displayName": "Better Stack",
     "shortDescription": "Better Stack Incidents and Telemetry",
