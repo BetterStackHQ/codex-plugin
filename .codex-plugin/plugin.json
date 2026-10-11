@@ -82,7 +82,7 @@
   },
   "interface": {
     "displayName": "Better Stack",
-    "shortDescription": "Incidents and Telemetry",
+    "shortDescription": "Incidents, logs and metrics",
     "longDescription": "Investigate incidents, check who is on call, manage uptime monitors, query logs, metrics, traces and errors, and build dashboards with your Better Stack Incidents and Telemetry data.",
     "developerName": "Better Stack, Inc.",
     "category": "Developer Tools",
