@@ -44,8 +44,9 @@ name, while Codex installs it as `betterstack`.
 scripts/chatgpt-zip main betterstack-plugin.zip
 ```
 
-Upload it from inside the live plugin (its **Upload plugin to make changes**), not from the
-Plugins list, which creates a new plugin.
+Upload it from inside the live plugin, not from the Plugins list, which creates a new plugin:
+open https://platform.openai.com/plugins/manage/plugin_asdk_app_6aa02bd506908191bbf12fc2ec2f3161
+(Better Stack's OpenAI organization only) and upload the ZIP there.
 
 The manifest sets `extensions.com.openai.onboardingSkill` to the connect-betterstack skill,
 so ChatGPT and Codex offer it as the plugin's setup step after install.
