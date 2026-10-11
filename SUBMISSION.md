@@ -35,12 +35,17 @@ and icons from the last ZIP uploaded in the portal, and its MCP connection is th
 on the portal's MCPs tab. To ship a change from this repo, upload a new ZIP to the existing
 plugin. It gets its own checks and review, and replaces the previous version once published.
 
-Build the ZIP from a clean checkout of `main` (`.gitattributes` leaves out the marketplace
-file and this checklist):
+Build the ZIP with `scripts/chatgpt-zip` (defaults: `main`, `betterstack-plugin.zip`). It leaves out
+the marketplace file, this checklist and the scripts (`.gitattributes`), and renames the plugin to
+`app-6aa02bd506908191bbf12fc2ec2f3161` inside the ZIP only: the portal requires the live plugin's
+name, while Codex installs it as `betterstack`.
 
 ```bash
-git archive --format=zip -o betterstack-plugin.zip main
+scripts/chatgpt-zip main betterstack-plugin.zip
 ```
+
+Upload it from inside the live plugin (its **Upload plugin to make changes**), not from the
+Plugins list, which creates a new plugin.
 
 The manifest sets `extensions.com.openai.onboardingSkill` to the connect-betterstack skill,
 so ChatGPT and Codex offer it as the plugin's setup step after install.
