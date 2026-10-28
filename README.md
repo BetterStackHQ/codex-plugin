@@ -34,7 +34,7 @@ codex mcp login betterstack
 
 ### Not connected yet?
 
-The plugin's **connect-betterstack** skill is its setup step. ChatGPT and Codex offer it after you install the plugin, and the agent also uses it when a Better Stack request comes in but the Better Stack tools aren't connected. It tells you how to connect in the app you're using instead of failing quietly.
+The plugin's **connect-betterstack** skill is its setup step. ChatGPT and Codex offer it after you install the plugin, and the agent also uses it when a Better Stack request comes in but the Better Stack tools aren't connected. It tells you how to connect in the app you're using instead of failing quietly. Once connected, it looks at your account and suggests what to set up next, such as Claude investigating every new incident or fixing your errors on a schedule.
 
 ## What you can do
 
