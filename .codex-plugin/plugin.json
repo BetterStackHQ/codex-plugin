@@ -1,6 +1,6 @@
 {
   "name": "betterstack",
-  "version": "1.3.9",
+  "version": "1.3.10",
   "description": "Connect Codex to your Better Stack Incidents and Telemetry data.",
   "author": {
     "name": "Better Stack, Inc.",
